@@ -2,32 +2,42 @@ import csv
 import getpass #from stackoverflow thread
 
 uid = getpass.getuser() #from stackoverflow thread
-db = "C:\users\zappari\desktop\python_class\crud_app\data\products.csv"
+products = "C:\users\zappari\desktop\python_class\crud_app\data\products.csv"
 
-with open(db, "r") as csv_file:
+def lookup(pid):
+    return
+
+with open(products, "r") as csv_file:
     reader = csv.DictReader(csv_file)
     data = list(reader)
     row_count = len(data)
-#    for row in reader:
-#        print(row["name"], row["price"])
 
-print "Welcome", uid, "\n"
+
+print "\n", "Welcome", uid, "\n"
 
 print "There are ", row_count, " products in the database.  Please select an operation:\n"
 
-print "operation         |   description"
-print "---------------   |   ---------------"
-print "List              |   Display a list of product identifiers and names"
-print "Show              |   Show information about a product"
-print "Create            |   Add a new product"
-print "Update            |   Edit an existing product"
-print "Destroy           |   Delete an existing product"
+print """
+operation         |   description
+---------------   |   ---------------
+List              |   Display a list of product identifiers and names
+Show              |   Show information about a product
+Create            |   Add a new product
+Update            |   Edit an existing product
+Destroy           |   Delete an existing product
 
-#user_input = raw_input("Please input a valid product idenitifer, or 'DONE' if there are no more items:")
-#if user_input == "DONE":
-#    break
-#else:
-#    product_ids.append(int(user_input))
+"""
+
+user_input = raw_input("Operation Selection:")
+
+if user_input.title() == "List":
+    for row in data:
+        print " + ", row["id"], row["name"], row["price"], row["department"]
+        #for key, value in row.iteritems() :
+            #print key, value
+        #print row
+elif user_input == "Show":
+    show_param = raw_input("Please input the ID number for the product you'd like to review:")
 
 #menu = {}
 #menu['1']="List"
