@@ -1,5 +1,6 @@
 import csv
 import getpass #from stackoverflow thread
+import itertools
 
 uid = getpass.getuser() #from stackoverflow thread
 csv_file_path = "data/products.csv"
@@ -14,7 +15,7 @@ with open(csv_file_path, "r") as csv_file:
 row_count = len(products)
 
 def show_lookup(show_param):
-    return [p for p in data if p['id'] == show_param]
+    return [p for p in products if p['id'] == show_param]
 
 print "\n", "Welcome", uid, "\n"
 
@@ -31,19 +32,22 @@ Destroy           |   Delete an existing product
 
 """
 
-#user_input = raw_input("Operation Selection:").title()
+select_op = raw_input("Operation Selection:").title()
+disp_price = '${0:.2f}'.format(float(row['price']))
 
-#if user_input.title() == "List":
-#    for row in data:
-#        print " + ", row["id"], row["name"], row["price"], row["department"]
-#elif user_input == "Show":
-#    show_param = raw_input("Please input the ID number for the product you'd like to review:")
-#    show_display = show_lookup(show_param)[0]
-#    print " + Prodcut ID: ", show_display['id']
+if select_op == "List":
+    for row in products:
+        print " + ", row["id"], row["name"], disp_price, row["department"]
+elif select_op == "Show":
+    show_param = raw_input("Please input the ID number for the product you'd like to review:")
+    show_display = show_lookup(show_param)[0]
+#    print " + Product ID: ", show_display['id']
 #    print " + Name: ", show_display['name']
 #    print " + Department: ", show_display['department']
 #    print " + Aisle: ", show_display['aisle']
 #    print " + Price: ", '${0:.2f}'.format(float(show_display['price']))
+    for k, v in show_display.iteritems():
+        print " + ", k.title(), ": ", v
 #elif user_input == "Create":
 #    print "Add a new product"
 #elif user_input == "Update":
