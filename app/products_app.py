@@ -2,13 +2,16 @@ import csv
 import getpass #from stackoverflow thread
 
 uid = getpass.getuser() #from stackoverflow thread
-products = "C:\users\zappari\desktop\python_class\crud_app\data\products.csv"
+csv_file_path = "data/products.csv"
 
-with open(products, "r") as csv_file:
-    reader = csv.DictReader(csv_file)
-    data = list(reader)
-    row_count = len(data)
+products = []
 
+with open(csv_file_path, "r") as csv_file:
+  reader = csv.DictReader(csv_file)
+  for row in reader:
+    products.append(row)
+
+row_count = len(products)
 
 def show_lookup(show_param):
     return [p for p in data if p['id'] == show_param]
@@ -28,27 +31,41 @@ Destroy           |   Delete an existing product
 
 """
 
-user_input = raw_input("Operation Selection:").title()
+#user_input = raw_input("Operation Selection:").title()
 
-if user_input.title() == "List":
-    for row in data:
-        print " + ", row["id"], row["name"], row["price"], row["department"]
-elif user_input == "Show":
-    show_param = raw_input("Please input the ID number for the product you'd like to review:")
-    show_display = show_lookup(show_param)[0]
-    print " + Prodcut ID: ", show_display['id']
-    print " + Name: ", show_display['name']
-    print " + Department: ", show_display['department']
-    print " + Aisle: ", show_display['aisle']
-    print " + Price: ", '${0:.2f}'.format(float(show_display['price']))
-elif user_input == "Create":
-    print "Add a new product"
-elif user_input == "Update":
-    print "Edit an existing product"
-elif user_input == "Destroy":
-    print "Delete an existing product"
-else:
-    print "Please type a recognized operation from the menu options"
+#if user_input.title() == "List":
+#    for row in data:
+#        print " + ", row["id"], row["name"], row["price"], row["department"]
+#elif user_input == "Show":
+#    show_param = raw_input("Please input the ID number for the product you'd like to review:")
+#    show_display = show_lookup(show_param)[0]
+#    print " + Prodcut ID: ", show_display['id']
+#    print " + Name: ", show_display['name']
+#    print " + Department: ", show_display['department']
+#    print " + Aisle: ", show_display['aisle']
+#    print " + Price: ", '${0:.2f}'.format(float(show_display['price']))
+#elif user_input == "Create":
+#    print "Add a new product"
+#elif user_input == "Update":
+#    print "Edit an existing product"
+#elif user_input == "Destroy":
+#    print "Delete an existing product"
+#else:
+#    print "Please type a recognized operation from the menu options"
+
+#w_file_path =  "C:\users\zappari\desktop\python_class\crud_app\data\write_practice.csv"
+
+#with open(w_file_path, "w") as csv_file:
+#    writer = csv.DictWriter(csv_file, fieldnames=["id", "name", "aisle", "department", "price"])
+#    writer.writeheader() # uses fieldnames set above
+#    for row in data:
+#        writer.writerow(row)
+
+with open(csv_file_path, "wb") as csv_file:
+  writer = csv.DictWriter(csv_file, fieldnames=["id","name","aisle","department","price"])
+  writer.writeheader() # uses fieldnames set above
+  for product in products:
+    writer.writerow(product)
 
 
 #menu = {}
