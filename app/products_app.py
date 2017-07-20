@@ -7,6 +7,8 @@ csv_file_path = "data/products.csv"
 
 products = []
 
+#READ INVENTORY CSV FILE
+
 with open(csv_file_path, "r") as csv_file:
   reader = csv.DictReader(csv_file)
   for row in reader:
@@ -17,6 +19,12 @@ row_count = len(products)
 def show_lookup(show_param):
     return [p for p in products if p['id'] == show_param]
 
+def create_prod(create_param):
+    print "To create a new product, please specify the product's information..."
+    product_name = raw_input("Product Name is:")
+    product_aisle = raw_input("Product aisle is:")
+    new_product = {
+        'id':product_id, 'name': product_name}
 print "\n", "Welcome", uid, "\n"
 
 print "There are {0} products in the database.  Please select an operation:\n".format(row_count)
@@ -48,8 +56,10 @@ elif select_op == "Show":
 #    print " + Price: ", '${0:.2f}'.format(float(show_display['price']))
     for k, v in show_display.iteritems():
         print " + ", k.title(), ": ", v
-#elif user_input == "Create":
-#    print "Add a new product"
+elif user_input == "Create":
+    print "Add a new product"
+
+
 #elif user_input == "Update":
 #    print "Edit an existing product"
 #elif user_input == "Destroy":
