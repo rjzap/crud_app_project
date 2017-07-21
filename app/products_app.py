@@ -19,12 +19,23 @@ row_count = len(products)
 def show_lookup(show_param):
     return [p for p in products if p['id'] == show_param]
 
-def create_prod(create_param):
+def create_prod():
     print "To create a new product, please specify the product's information..."
+    product_id = int(products[-1]["id"]) + 1
     product_name = raw_input("Product Name is:")
+    product_dep = raw_input("Product department is:")
     product_aisle = raw_input("Product aisle is:")
+    product_price = raw_input("Product price is:")
     new_product = {
-        'id':product_id, 'name': product_name}
+        'id' : product_id,
+        'name' : product_name,
+        'department' : product_dep,
+        "aisle" : product_aisle,
+        "price" : product_price
+        }
+    print "The new product is:\n", new_product
+    products.append(new_product)
+
 print "\n", "Welcome", uid, "\n"
 
 print "There are {0} products in the database.  Please select an operation:\n".format(row_count)
@@ -56,8 +67,9 @@ elif select_op == "Show":
 #    print " + Price: ", '${0:.2f}'.format(float(show_display['price']))
     for k, v in show_display.iteritems():
         print " + ", k.title(), ": ", v
-elif user_input == "Create":
-    print "Add a new product"
+elif select_op == "Create":
+    create_prod()
+
 
 
 #elif user_input == "Update":
