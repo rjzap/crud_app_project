@@ -2,6 +2,7 @@ import csv
 import getpass #from stackoverflow thread
 import itertools
 from collections import OrderedDict as od
+from operator import itemgetter
 
 uid = getpass.getuser() #from stackoverflow thread
 csv_file_path = "data/products.csv"
@@ -37,6 +38,18 @@ def create_prod():
     print "The new product is:\n", new_product
     products.append(new_product)
 
+def update_prod(upd_param):
+    upd_ind = map(itemgetter("id"), products).index(upd_param)
+    for k in disp_key_order[1:]:
+        products[upd_ind][k] = raw_input("Change product " + k + " from " + ' "{}"'.format(products[upd_ind][k]) + " to: ")
+
+def destroy_prod():
+    destr_param = raw_input("Please specify the product ID for the record you'd like to delete:")
+    prod_elim = [p for p in products if p['id'] == destr_param]
+    print "Destroying", prod_elim      
+
+
+
 print "\n", "Welcome", uid, "\n"
 
 print "There are {0} products in the database.  Please select an operation:\n".format(row_count)
@@ -52,21 +65,24 @@ Destroy           |   Delete an existing product
 
 """
 
-select_op = raw_input("Operation Selection:").title()
-disp_price = '${0:.2f}'.format(float(row['price']))
-disp_key_order = ("id", "name", "department", "aisle", "price")
+
 
 if select_op == "List":
     for row in products:
         print " + ", row["id"], row["name"], row["department"] , row["aisle"], disp_price
 elif select_op == "Show":
-    show_param = raw_input("Please input the ID number for the product you'd like to review:")
+    show_param = raw_input("Please input the product ID for the product record like to review:")
     show_dis = show_lookup(show_param)[0]
     show_display = od((k, show_dis[k]) for k in disp_key_order)
     for k, v in show_display.iteritems():
         print " + ", k.title(), ": ", v
 elif select_op == "Create":
     create_prod()
+elif select_op == "Update":
+    upd_param = raw_input("Please specify the product ID for the product record you'd like to edit:")
+    update_prod(upd_param)
+elif select_op == "Destroy":
+    destroy_prod()
 
 
 
