@@ -44,10 +44,14 @@ def update_prod(upd_param):
         products[upd_ind][k] = raw_input("Change product " + k + " from " + ' "{}"'.format(products[upd_ind][k]) + " to: ")
 
 def destroy_prod():
+    global products
     destr_param = raw_input("Please specify the product ID for the record you'd like to delete:")
     prod_elim = [p for p in products if p['id'] == destr_param]
-    print "Destroying", prod_elim      
-
+    prod_elim = od((k,prod_elim[0][k]) for k in disp_key_order)
+    print "Destroying: \n"
+    for k,v in prod_elim.iteritems():
+        print " + ", k.title(), ": ", v
+    products = [p for p in products if p['id'] != destr_param]
 
 
 print "\n", "Welcome", uid, "\n"
@@ -65,7 +69,9 @@ Destroy           |   Delete an existing product
 
 """
 
-
+select_op = raw_input("Operation Selection:").title()
+disp_price = '${0:.2f}'.format(float(row['price']))
+disp_key_order = ("id", "name", "department", "aisle", "price")
 
 if select_op == "List":
     for row in products:
@@ -83,8 +89,6 @@ elif select_op == "Update":
     update_prod(upd_param)
 elif select_op == "Destroy":
     destroy_prod()
-
-
 
 #elif user_input == "Update":
 #    print "Edit an existing product"
