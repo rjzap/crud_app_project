@@ -66,44 +66,37 @@ Show              |   Show information about a product
 Create            |   Add a new product
 Update            |   Edit an existing product
 Destroy           |   Delete an existing product
+Exit              |   Exit the program
 
 """
 
-select_op = raw_input("Operation Selection:").title()
+
 disp_price = '${0:.2f}'.format(float(row['price']))
 disp_key_order = ("id", "name", "department", "aisle", "price")
 
-if select_op == "List":
-    for row in products:
-        print " + ", row["id"], row["name"], row["department"] , row["aisle"], disp_price
-elif select_op == "Show":
-    show_param = raw_input("Please input the product ID for the product record like to review:")
-    show_dis = show_lookup(show_param)[0]
-    show_display = od((k, show_dis[k]) for k in disp_key_order)
-    for k, v in show_display.iteritems():
-        print " + ", k.title(), ": ", v
-elif select_op == "Create":
-    create_prod()
-elif select_op == "Update":
-    upd_param = raw_input("Please specify the product ID for the product record you'd like to edit:")
-    update_prod(upd_param)
-elif select_op == "Destroy":
-    destroy_prod()
+while True:
+    select_op = raw_input("\nOperation Selection:").title()
+    if select_op == "Exit":
+        break
+    elif select_op == "List":
+        for row in products:
+            print " + ", row["id"], row["name"], row["department"] , row["aisle"], disp_price
+    elif select_op == "Show":
+        show_param = raw_input("Please input the product ID for the product record like to review:")
+        show_dis = show_lookup(show_param)[0]
+        show_display = od((k, show_dis[k]) for k in disp_key_order)
+        for k, v in show_display.iteritems():
+            print " + ", k.title(), ": ", v
+    elif select_op == "Create":
+        create_prod()
+    elif select_op == "Update":
+        upd_param = raw_input("Please specify the product ID for the product record you'd like to edit:")
+        update_prod(upd_param)
+    elif select_op == "Destroy":
+        destroy_prod()
+    else:
+        print "Please input a recognized operation from the menu"
 
-#elif user_input == "Update":
-#    print "Edit an existing product"
-#elif user_input == "Destroy":
-#    print "Delete an existing product"
-#else:
-#    print "Please type a recognized operation from the menu options"
-
-#w_file_path =  "C:\users\zappari\desktop\python_class\crud_app\data\write_practice.csv"
-
-#with open(w_file_path, "w") as csv_file:
-#    writer = csv.DictWriter(csv_file, fieldnames=["id", "name", "aisle", "department", "price"])
-#    writer.writeheader() # uses fieldnames set above
-#    for row in data:
-#        writer.writerow(row)
 
 with open(csv_file_path, "wb") as csv_file:
   writer = csv.DictWriter(csv_file, fieldnames=["id","name","aisle","department","price"])
