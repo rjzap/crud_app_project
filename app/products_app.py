@@ -1,6 +1,7 @@
 import csv
 import getpass #from stackoverflow thread
 import itertools
+from collections import OrderedDict as od
 
 uid = getpass.getuser() #from stackoverflow thread
 csv_file_path = "data/products.csv"
@@ -53,18 +54,15 @@ Destroy           |   Delete an existing product
 
 select_op = raw_input("Operation Selection:").title()
 disp_price = '${0:.2f}'.format(float(row['price']))
+disp_key_order = ("id", "name", "department", "aisle", "price")
 
 if select_op == "List":
     for row in products:
-        print " + ", row["id"], row["name"], disp_price, row["department"]
+        print " + ", row["id"], row["name"], row["department"] , row["aisle"], disp_price
 elif select_op == "Show":
     show_param = raw_input("Please input the ID number for the product you'd like to review:")
-    show_display = show_lookup(show_param)[0]
-#    print " + Product ID: ", show_display['id']
-#    print " + Name: ", show_display['name']
-#    print " + Department: ", show_display['department']
-#    print " + Aisle: ", show_display['aisle']
-#    print " + Price: ", '${0:.2f}'.format(float(show_display['price']))
+    show_dis = show_lookup(show_param)[0]
+    show_display = od((k, show_dis[k]) for k in disp_key_order)
     for k, v in show_display.iteritems():
         print " + ", k.title(), ": ", v
 elif select_op == "Create":
