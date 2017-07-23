@@ -66,11 +66,15 @@ def destroy_prod():
         print " + ", k.title(), ": ", v
     products = [p for p in products if p['id'] != destr_param]
 
+print "-----------------------------"
+print "PRODUCT INVENTORY APPLICATION"
+print "-----------------------------"
+
 print "\n", "Welcome", uid, "\n"
 
 print "There are {0} products in the database.  Please select an operation:\n".format(row_count)
 
-menu = """
+print """
 operation         |   description
 ---------------   |   ---------------
 List              |   Display a list of product identifiers and names
@@ -79,7 +83,6 @@ Create            |   Add a new product
 Update            |   Edit an existing product
 Destroy           |   Delete an existing product
 """
-print menu
 
 disp_key_order = ("id", "name", "department", "aisle", "price")
 select_op = raw_input("\nType desired operation from menu list options:").title()
@@ -96,6 +99,8 @@ elif select_op == "Destroy":
     destroy_prod()
 else:
     print "Please input a recognized operation from the menu"
+
+##WRITE INVENTORY CSV FILE
 
 with open(csv_file_path, "wb") as csv_file:
     writer = csv.DictWriter(csv_file, fieldnames=["id","name","aisle","department","price"])
