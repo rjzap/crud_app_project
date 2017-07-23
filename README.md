@@ -1,13 +1,18 @@
-# Name of Your App
+# Product inventory application
 
-Some description or other info about what the app does.
+This app executes CRUD operations on a product inventory of a specified structure stored as a csv file to be located in the data subfolder of the crud app parent directory.  THe app will read in the initial product inventory from the csv file, and will update that file based on the selected operations executed within the app.  Operations options are:
+-List: all files currently in the invetory
+-Show: display detailed view of one record specified by user input product ID
+-Create: create a new product entry to be added to the inventory
+-Update: edit product information for an existing product in the inventory
+-Destroy: delete a product record from the inventory
 
 ## Installation
 
 Download the source code:
 
 ```shell
-git clone remote_clone_address_of_your_repo_here
+git clone https://github.com/rjzap/crud_app_project.git
 cd some/path/to/repo/
 ```
 
